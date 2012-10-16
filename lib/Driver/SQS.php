@@ -24,8 +24,6 @@ class SQS implements DriverInterface
 
         $response = $this->handle->send_message($this->queue_url,$content);
 
-        var_dump($response);
-
         return $response->isOK();
     }
 
