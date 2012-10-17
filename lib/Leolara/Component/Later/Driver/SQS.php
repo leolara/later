@@ -48,11 +48,14 @@ class SQS implements DriverInterface
 
         $invocation = new Invocation();
 
-        $content = json_decode( (string) $response->body->ReceiveMessageResult->Message->Body, true);
+        $invocation->driver_handle = (string) $response->body->ReceiveMessageResult->Message->ReceiptHandle;
+        if (empty($invocation->driver_handle)) {
+            return null;
+        }
 
+        $content = json_decode( (string) $response->body->ReceiveMessageResult->Message->Body, true);
         $invocation->method = $content['method'];
         $invocation->arguments = $content['arguments'];
-        $invocation->driver_handle = (string) $response->body->ReceiveMessageResult->Message->ReceiptHandle;
 
         return $invocation;
     }
