@@ -10,7 +10,8 @@ class Now
     private $tasksObj;
     private $options = array(
         'loop_max' => 1,
-        'empty_queue_wait' => 1000
+        'empty_queue_wait' => 1000,
+        'progressCallback' => null
     );
 
     private $interrupt = false;
@@ -22,9 +23,9 @@ class Now
         $this->options = array_merge($this->options,$options);
     }
 
-    public function loop()
+    public function loop($options=array())
     {
-        $options = $this->options;
+        $options = array_merge($this->options,$options);
 
         $executed = 0;
         while( (($options['loop_max'] == 0) || ($options['loop_max'] > $executed)) && !$this->interrupt )
@@ -34,9 +35,10 @@ class Now
             }
 
             $executed += $this->accept();
+            if ($options['progressCallback'] instanceof \Closure) {
+                $options['progressCallback']($executed);
+            }
         }
-
-        echo $executed;
 
         return $executed;
     }
