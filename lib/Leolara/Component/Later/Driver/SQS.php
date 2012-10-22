@@ -15,11 +15,12 @@ class SQS implements DriverInterface
         $this->queue_url = $queue_url;
     }
 
-    public function send($method,$arguments)
+    public function send($method,$arguments,$sid)
     {
         $content = json_encode(array(
             'method' => $method,
-            'arguments' => $arguments
+            'arguments' => $arguments,
+            'sid' => $sid
         ));
 
         $response = $this->handle->send_message($this->queue_url,$content);
@@ -56,6 +57,7 @@ class SQS implements DriverInterface
         $content = json_decode( (string) $response->body->ReceiveMessageResult->Message->Body, true);
         $invocation->method = $content['method'];
         $invocation->arguments = $content['arguments'];
+        $invocation->sid = $content['sid'];
 
         return $invocation;
     }

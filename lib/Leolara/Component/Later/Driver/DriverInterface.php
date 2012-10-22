@@ -6,7 +6,7 @@ use Leolara\Component\Later\Invocation;
 
 interface DriverInterface
 {
-    public function send($method,$arguments);
+    public function send($method,$arguments,$sid);
 
     public function checkQueue();
 
