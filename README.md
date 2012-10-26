@@ -2,9 +2,9 @@
 
 ## What is Later?
 
-A PHP php-the-right-way micro component to run service methods transparently and easily, without changing anything most of the time. It is as easy as calling a service method, but it will be run later.
+A PHP php-the-right-way micro component to run service methods offline transparently and easily, without changing anything most of the time. It is as easy as calling a service method, but it will be run later.
 
-The only prerequisity is that all methods arguments can be json encode/decode without losing data, and that you can have the service object in the same state offline. This later requirement is usually trivial for utility classes, or what in Symfony 2 are called services.
+The only requirement is that all methods arguments can be json encode/decode without losing data, and that you can have the service object in the same state offline. This later requirement is usually trivial for utility classes, or what in Symfony 2 are called services.
 
 `Later` integrates specially well with Symfony 2 service container and probably with other service containers.
 
